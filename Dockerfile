@@ -1,6 +1,9 @@
 # Multi-stage build: Frontend + Backend
 FROM node:18-alpine AS frontend-builder
 
+# Set production environment for frontend build
+ENV NODE_ENV=production
+
 # Build frontend
 WORKDIR /app/frontend
 COPY frontend/package*.json ./

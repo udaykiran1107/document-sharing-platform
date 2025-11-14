@@ -12,7 +12,8 @@ export const config = {
   uploadDir: process.env.UPLOAD_DIR || './uploads',
   maxFileSize: parseInt(process.env.MAX_FILE_SIZE) || 52428800, // 50MB
   databasePath: process.env.DATABASE_PATH || './data/database.sqlite',
-  frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+  // In production, frontend is served from same origin
+  frontendUrl: process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173'),
   supportedMimeTypes: [
     // PDF
     'application/pdf',

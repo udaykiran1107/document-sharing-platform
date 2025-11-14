@@ -47,8 +47,8 @@ router.post('/', async (req, res, next) => {
           fileRecords.push(fileRecord);
         }
 
-        // Construct share URL
-        const shareUrl = `${req.protocol}://${req.get('host')}/share/${share.shareId}`;
+        // Construct share URL using frontend URL
+        const shareUrl = `${config.frontendUrl}/share/${share.shareId}`;
 
         // Return success response
         res.status(201).json({

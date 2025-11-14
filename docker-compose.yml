@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: docshare-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - UPLOAD_DIR=/app/uploads
+      - DATABASE_PATH=/app/data/database.sqlite
+      - MAX_FILE_SIZE=52428800
+      - FRONTEND_URL=http://localhost
+    volumes:
+      - ./uploads:/app/uploads
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - docshare-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: docshare-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - docshare-network
+
+networks:
+  docshare-network:
+    driver: bridge
+
+volumes:
+  uploads:
+  data:
+  logs:

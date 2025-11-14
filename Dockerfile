@@ -1,14 +1,13 @@
 # Multi-stage build: Frontend + Backend
 FROM node:18-alpine AS frontend-builder
 
-# Set production environment for frontend build
-ENV NODE_ENV=production
-
-# Build frontend
+# Build frontend (need dev dependencies for vite)
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ ./
+# Set NODE_ENV for build
+ENV NODE_ENV=production
 RUN npm run build
 
 # Backend stage
